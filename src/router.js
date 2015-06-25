@@ -24,6 +24,7 @@ export default Router.extend({
     '': 'public',
     'repos': 'repos',
     'login': 'login',
+    'logout': 'logout',
     'auth/callback?:query' : 'authCallback'
   },
 
@@ -38,7 +39,6 @@ export default Router.extend({
   },
 
   login() {
-    debugger
     window.location = 'https://github.com/login/oauth/authorize?' + qs.stringify({
       scope: 'user,repo',
       redirect_uri: 'http://localhost:3000' + '/auth/callback',
@@ -47,16 +47,22 @@ export default Router.extend({
   },
 
   authCallback (query) {
-      query = qs.parse(query)
-      console.log(query)
+    query = qs.parse(query)
+    console.log(query)
 
-      xhr({
-        url: 'https://labelr-localhost.herokuapp.com/authenticate/' + query.code,
-        json: true
-      }, (err, req, body) => {
-        console.log(body)
-        app.me.token = body.token
-      })
-    }
+    xhr({
+      url: 'https://labelr-localhost.herokuapp.com/authenticate/' + query.code,
+      json: true
+    }, (err, req, body) => {
+      console.log(body)
+      app.me.token = body.token
+      this.redirectTo('/repos')
+    })
+  },
+
+  logout() {
+    window.localStorage.clear()
+    window.location = '/'
+  }
 
 })
