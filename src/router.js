@@ -5,8 +5,8 @@ import qs from 'qs'
 import xhr from 'xhr'
 import PublicPage from './pages/public'
 import ReposPage from './pages/repos'
-import Layout from './layout'
 import RepoDetail from './pages/repo-detail'
+import Layout from './layout'
 
 export default Router.extend({
   renderPage (page, opts = {layout: true}) {
@@ -40,8 +40,7 @@ export default Router.extend({
 
   repoDetail (owner, name) {
     const model = app.me.repos.getByFullName(owner + '/' + name)
-
-    this.renderPage(<RepoDetail repo={model}/>)
+    this.renderPage(<RepoDetail repo={model} labels={model.labels}/>)
   },
 
   login () {
