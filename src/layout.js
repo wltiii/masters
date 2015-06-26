@@ -1,7 +1,6 @@
 import React from 'react'
 import OnClickHandler from './components/onClickHandler'
 import ampersandMixin from 'ampersand-react-mixin'
-import ap from 'ampersand-app'
 
 export default React.createClass({
   mixins: [ampersandMixin],
